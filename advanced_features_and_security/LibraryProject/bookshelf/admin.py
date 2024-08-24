@@ -8,7 +8,7 @@ class BookAdmin(admin.ModelAdmin):
 
 class CustomUserAdmin(admin.ModelAdmin):
     model = CustomUser
-    
+    fieldsets = ('email', 'profile_photo', 'date_of_birth')
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(CustomUser, CustomUserAdmin)
