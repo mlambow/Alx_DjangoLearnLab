@@ -8,7 +8,9 @@ from rest_framework.views import APIView
 class BookList(generics.ListAPIView):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
+    permission_classes = [IsAuthenticated]
 
 class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
+    permission_classes = [IsAuthenticated, IsAdminUser]
