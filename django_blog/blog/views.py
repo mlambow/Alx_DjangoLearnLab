@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, DeleteView, UpdateView, CreateView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import SignUpForm
+from .models import Post
 
 def register(request):
     if request.method == 'POST':
@@ -20,3 +23,20 @@ def profile(request):
         user.email = request.POST['email']
         user.save()
     return render(request, 'blog/profile.html')
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+
+class PostDetailView(DetailView):
+    model = Post
+
+class PostCreateView(CreateView, LoginRequiredMixin):
+    pass
+
+class PostUpdateView(UpdateView):
+    pass
+
+class PostDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+    pass
