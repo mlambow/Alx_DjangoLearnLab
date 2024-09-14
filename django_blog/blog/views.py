@@ -11,7 +11,7 @@ def register(request):
     else:
         form = SignUpForm()
 
-    return render(request, 'blog/signup.html', {'form': form})
+    return render(request, 'blog/register.html', {'form': form})
 
 @login_required
 def profile(request):
