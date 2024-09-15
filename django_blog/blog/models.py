@@ -19,3 +19,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.post.title
+    
+class Tag(models.Model):
+    name = models.ManyToManyField(Post, related_name='tag')
+
+    def __str__(self):
+        return self.name
