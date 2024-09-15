@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from taggit.forms import TagWidget as Widget
 from .models import Comment
 
 class SignUpForm(UserCreationForm):
@@ -14,7 +15,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content']
 
-class TagWidget():
+class TagWidget(Widget):
     def __init__(self, attrs=None):
         default_attrs = {'placeholder': 'Enter tags separated by commas'}
         if attrs:
