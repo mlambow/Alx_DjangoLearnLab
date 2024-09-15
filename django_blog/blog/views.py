@@ -6,7 +6,7 @@ from django.views.generic import ListView, DeleteView, UpdateView, CreateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .forms import SignUpForm
-from .models import Post
+from .models import Post, Comment
 
 def register(request):
     if request.method == 'POST':
@@ -57,3 +57,8 @@ class PostDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('post_list')
+
+class CommentListView(ListView):
+    model = Comment
+    template_name = 'blog/add_comment.html'
+    fields = '__all__'
