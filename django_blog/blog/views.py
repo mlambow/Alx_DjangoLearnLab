@@ -61,4 +61,16 @@ class PostDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
 class CommentListView(ListView):
     model = Comment
     template_name = 'blog/add_comment.html'
+
+class CommentCreateView(CreateView):
+    model = Comment
+    template_name = 'blog/create_comment.html'
     fields = '__all__'
+
+class CommentUpdateView(UpdateView):
+    model = Comment
+    template_name = 'blog/update_comment.html'
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    template_name = 'blog/delete_comment.html'
