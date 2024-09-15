@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DeleteView, UpdateView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 from django.urls import reverse_lazy
 from .forms import SignUpForm
 from .models import Post, Comment
@@ -74,3 +75,12 @@ class CommentUpdateView(UpdateView):
 class CommentDeleteView(DeleteView):
     model = Comment
     template_name = 'blog/delete_comment.html'
+
+def search_posts(request):
+    query = request.GET.get('q')
+    posts = Post.objects.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(tags_name__icontains=query)
+    ).distinct()
+    return render(request, 'search_results.html')
