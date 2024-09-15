@@ -81,6 +81,6 @@ def search_posts(request):
     posts = Post.objects.filter(
         Q(title__icontains=query) |
         Q(content__icontains=query) |
-        Q(tags_name__icontains=query)
+        Q(tags__name__icontains=query)
     ).distinct()
     return render(request, 'search_results.html')
