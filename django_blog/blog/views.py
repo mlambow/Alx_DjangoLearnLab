@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DeleteView, UpdateView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.urls import reverse_lazy
 from .forms import SignUpForm
 from .models import Post
 
@@ -48,6 +49,11 @@ class PostUpdateView(UpdateView, LoginRequiredMixin):
     model = Post
     template_name = 'blog/post_update.html'
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 class PostDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post
     template_name = 'blog/post_delete.html'
+    success_url = reverse_lazy('post_list')
