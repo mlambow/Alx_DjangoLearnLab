@@ -1,3 +1,5 @@
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DeleteView, UpdateView, CreateView, DetailView
@@ -31,12 +33,21 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+    template_name = 'blog/post_detail.html'
 
 class PostCreateView(CreateView, LoginRequiredMixin):
-    pass
+    model = Post
+    template_name = 'blog/post_create.html'
+    fields = ['title', 'content']
 
-class PostUpdateView(UpdateView):
-    pass
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class PostUpdateView(UpdateView, LoginRequiredMixin):
+    model = Post
+    template_name = 'blog/post_update.html'
 
 class PostDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
-    pass
+    model = Post
+    template_name = 'blog/post_delete.html'
