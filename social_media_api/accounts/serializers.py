@@ -15,7 +15,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create_auth_token(created=False):
         user = get_user_model().objects.create_user()
         if created:
-            Token.objects.create
+            Token.objects.create(user=user)
 
 class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
