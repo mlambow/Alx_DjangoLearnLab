@@ -22,3 +22,9 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     pagination_class = SetPagination
     filter_backends = [filters.SearchFilter]
+
+class PostFeedView(viewsets.ModelViewSet):
+    queryset = Post.objects.all().order_by('-created_at')
+    serializer_class = PostSerializer
+    pagination_class = SetPagination
+    permission_classes = [IsAuthenticated]

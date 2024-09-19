@@ -29,3 +29,8 @@ class CommentSerializer(serializers.ModelSerializer):
     def validate_content(self, value):
         if len(value) > 2000:
             raise serializers.ValidationError('Comment content is too long')
+        
+class PostSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fileds = ['id', 'author', 'content', 'created_at']
