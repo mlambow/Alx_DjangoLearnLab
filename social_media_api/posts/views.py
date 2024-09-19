@@ -32,4 +32,4 @@ class PostFeedView(viewsets.ModelViewSet):
     def get_query(self):
         user = self.request.user
         following_users = user.following.all()
-        return Post.objects.filter(author_in=following_users).order_by('-created_at')
+        return Post.objects.filter(author__in=following_users).order_by('-created_at')
