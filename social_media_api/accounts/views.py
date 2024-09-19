@@ -78,15 +78,15 @@ class UnfollowUserView(generics.GenericAPIView):
         follower.following.remove(user_to_unfollow)
         return Response({'detail': 'User unfollowed successfully'}, status = status.HTTP_204_NO_CONTENT)
 
-# class FollowerListView(generics.GenericAPIView):
-#     permission_classes = [permissions.IsAuthenticated]
-#     serializer_class = FollowSerializer
+class FollowerListView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = FollowSerializer
     
-#     def get(self, request, user_id):
-#         user = CustomUser.objects.get(id = user_id)
-#         followers = user.followers.all()
-#         serializer = self.get_serializer(followers, many = True)
-#         return Response(serializer.data)
+    def get(self, request, user_id):
+        user = CustomUser.objects.get(id = user_id)
+        followers = user.followers.all()
+        serializer = self.get_serializer(followers, many = True)
+        return Response(serializer.data)
     
 class FollowingListView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]

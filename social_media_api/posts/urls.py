@@ -8,5 +8,5 @@ router.register(r'posts', views.PostViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('/feed/', views.PostFeedView.as_view(), name='feed'),
+    path('feed/', views.PostFeedView.as_view({'get': 'list'}), name='feed'),
 ]
