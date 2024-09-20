@@ -41,14 +41,14 @@ class LikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PostSerializer
 
-    def post(self, request, post_id):
-        post = generics.get_object_or_404(Post, id = post_id)
+    def post(self, request, pk):
+        post = generics.get_object_or_404(Post, pk=pk)
         user = request.user
 
         if Like.objects.filter(post=post, user=user).exists():
             return Response({'detail': 'You have already liked this post'}, status = status.HTTP_400_BAD_REQUEST)
         
-        Like.objects.get_or_create(post=post, user=user)
+        Like.objects.get_or_create(post=post, user=request.user)
         Notification.objects.create(
             recipient = post.author,
             actor = user,
@@ -61,8 +61,8 @@ class UnlikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PostSerializer
 
-    def delete(self, request, post_id):
-        post = generics.get_object_or_404(Post, id = post_id)
+    def delete(self, request, pk):
+        post = generics.get_object_or_404(Post, pk=pk)
         user = request.user
         like = Like.objects.filter(user=user, post=post).first()
 
