@@ -48,7 +48,7 @@ class LikePostView(generics.GenericAPIView):
         if Like.objects.filter(post=post, user=user).exists():
             return Response({'detail': 'You have already liked this post'}, status = status.HTTP_400_BAD_REQUEST)
         
-        Like.objects.get_or_create(post=post, user=request.user)
+        Like.objects.get_or_create(user=request.user, post=post)
         Notification.objects.create(
             recipient = post.author,
             actor = user,
